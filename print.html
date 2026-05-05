@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTS Concrete — Print</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,700;1,300&family=DM+Sans:opsz,wght@9..40,400&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:   #F4F3F1;
+      --ink:  #1C1C1C;
+      --red:  #A61C2A;
+      --navy: #1B2A3B;
+
+      --f-display: 'Cormorant Garamond', Georgia, serif;
+      --f-body:    'DM Sans', sans-serif;
+      --f-mono:    'DM Mono', 'Courier New', monospace;
+
+      --ann-w: 160px;
+      --gap:   48px;
+      --pad-x: 56px;
+    }
+
+    html, body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--f-body);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* ── PAGE ── */
+    .page {
+      width: 100%;
+      min-height: 100vh;
+      background: var(--bg);
+      padding: 64px var(--pad-x);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      break-inside: avoid;
+      break-after: page;
+    }
+    .page:last-child { break-after: auto; }
+
+    /* ── HEADER (replaces fixed nav) ── */
+    .print-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      border-bottom: 0.5px solid rgba(28,28,28,0.25);
+      padding-bottom: 20px;
+      margin-bottom: 56px;
+    }
+    .print-logo {
+      font-family: var(--f-mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--red);
+    }
+    .print-section-label {
+      font-family: var(--f-mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink);
+      opacity: 0.4;
+    }
+
+    /* ── GRID ── */
+    .gl {
+      display: grid;
+      grid-template-columns: var(--ann-w) 1fr;
+      column-gap: var(--gap);
+      width: 100%;
+    }
+    .ann {
+      font-family: var(--f-mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink);
+      opacity: 0.4;
+      padding-top: 6px;
+      line-height: 1.6;
+    }
+
+    /* ── TYPE ── */
+    .hed {
+      font-family: var(--f-display);
+      line-height: 1.0;
+      letter-spacing: -0.01em;
+      color: var(--navy);
+    }
+    .hed-hero {
+      font-size: 88px;
+      font-weight: 300;
+    }
+    .hed-hero strong { font-weight: 700; display: block; }
+
+    .hed-section {
+      font-size: 56px;
+      font-weight: 300;
+      margin-bottom: 28px;
+    }
+    .hed-section strong { font-weight: 700; display: block; }
+
+    .hed-svc {
+      font-family: var(--f-display);
+      font-size: 36px;
+      font-weight: 300;
+      line-height: 1.05;
+      color: var(--navy);
+      margin-bottom: 16px;
+    }
+    .hed-svc strong { font-weight: 700; }
+
+    .body { font-size: 15px; line-height: 1.75; }
+    .body p + p { margin-top: 20px; }
+
+    .caption {
+      font-family: var(--f-mono);
+      font-size: 10px;
+      letter-spacing: 0.04em;
+      color: var(--ink);
+      opacity: 0.5;
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+    .mono-label {
+      font-family: var(--f-mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.4;
+    }
+
+    /* ── BUTTON (static, no hover) ── */
+    .btn {
+      display: inline-block;
+      font-family: var(--f-mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink);
+      border: 1px solid var(--ink);
+      padding: 12px 28px;
+      text-decoration: none;
+      background: transparent;
+      margin-top: 28px;
+    }
+
+    /* ── IMAGE PLACEHOLDER ── */
+    .img-ph {
+      width: 100%;
+      background: #E5E2DC;
+      position: relative;
+      overflow: hidden;
+      display: block;
+    }
+    .img-ph-label {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--f-mono);
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      color: #888078;
+      text-align: center;
+      padding: 24px;
+      line-height: 1.6;
+    }
+
+    /* ── RULE ── */
+    .rule {
+      width: 100%;
+      height: 0.5px;
+      background: var(--ink);
+      opacity: 0.2;
+      margin: 40px 0;
+    }
+
+    /* ── SERVICE GRID ── */
+    .svc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+    .svc-pair + .svc-pair { margin-top: 48px; }
+
+    /* ── PORTFOLIO GRID ── */
+    .port-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px 24px;
+    }
+
+    /* ── CONTACT GRID ── */
+    .contact-detail-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 40px;
+      padding-top: 32px;
+      border-top: 0.5px solid rgba(28,28,28,0.15);
+    }
+
+    /* ── FORM (static) ── */
+    .form-field { margin-bottom: 20px; }
+    .form-label {
+      display: block;
+      font-family: var(--f-mono);
+      font-size: 9px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.45;
+      margin-bottom: 6px;
+    }
+    .form-line {
+      width: 100%;
+      height: 32px;
+      border-bottom: 0.5px solid rgba(28,28,28,0.3);
+    }
+    .form-line-tall {
+      height: 80px;
+      border-bottom: 0.5px solid rgba(28,28,28,0.3);
+    }
+
+    /* ── FOOTER PAGE ── */
+    .footer-page {
+      background: var(--navy);
+      color: #F4F3F1;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .footer-logo {
+      font-family: var(--f-mono);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #F4F3F1;
+      margin-bottom: 20px;
+    }
+    .footer-detail {
+      font-family: var(--f-mono);
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      line-height: 2.0;
+      opacity: 0.45;
+      color: #F4F3F1;
+    }
+    .footer-nav-list {
+      list-style: none;
+      margin-top: 40px;
+      display: flex;
+      gap: 32px;
+    }
+    .footer-nav-list li {
+      font-family: var(--f-mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #F4F3F1;
+      opacity: 0.35;
+    }
+
+    /* ── PRINT MEDIA ── */
+    @media print {
+      @page { size: portrait; margin: 0; }
+      html, body { background: var(--bg); }
+      .page { min-height: 100vh; page-break-after: always; }
+      .page:last-child { page-break-after: auto; }
+      .footer-page { background: var(--navy) !important; }
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useRef } = React;
+
+    function Img({ label, ratio = '4/3' }) {
+      const idRef = useRef('p' + Math.random().toString(36).slice(2));
+      const id = idRef.current;
+      return (
+        <div className="img-ph" style={{ aspectRatio: ratio }}>
+          <svg style={{ position:'absolute', inset:0, width:'100%', height:'100%' }} aria-hidden>
+            <defs>
+              <pattern id={id} patternUnits="userSpaceOnUse" width="24" height="24" patternTransform="rotate(45)">
+                <rect width="24" height="24" fill="#E0DCD5"/>
+                <line x1="0" y1="0" x2="0" y2="24" stroke="#D4CFC7" strokeWidth="10"/>
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill={`url(#${id})`}/>
+          </svg>
+          <span className="img-ph-label">{label}</span>
+        </div>
+      );
+    }
+
+    function PageHeader({ section }) {
+      return (
+        <div className="print-header">
+          <span className="print-logo">HTS Concrete</span>
+          {section && <span className="print-section-label">{section}</span>}
+        </div>
+      );
+    }
+
+    /* ── PAGE 1: HERO ── */
+    function PageHome() {
+      return (
+        <div className="page">
+          <PageHeader/>
+          <div className="gl">
+            <div className="ann">Washington<br/>Pacific NW</div>
+            <div>
+              <h1 className="hed hed-hero" style={{ color:'var(--red)' }}>
+                HTS<strong>Concrete</strong>
+              </h1>
+              <p className="body" style={{ maxWidth:560, marginTop:32 }}>
+                We build architectural concrete structures for residential and commercial spaces in the Pacific Northwest.
+              </p>
+              <span className="btn">View Our Work</span>
+            </div>
+          </div>
+          <div className="gl" style={{ marginTop:48 }}>
+            <div/>
+            <Img label="hero photography — architectural concrete project, Pacific Northwest" ratio="16/7"/>
+          </div>
+        </div>
+      );
+    }
+
+    /* ── PAGE 2: SERVICES intro + first two ── */
+    function PageServices1() {
+      return (
+        <div className="page">
+          <PageHeader section="Services"/>
+          <div className="gl" style={{ marginBottom:40 }}>
+            <div className="ann">02 — Services</div>
+            <div>
+              <h2 className="hed hed-section">What We<strong>Build.</strong></h2>
+            </div>
+          </div>
+          <div className="rule"/>
+          {/* Service 01 */}
+          <div className="gl svc-pair">
+            <div className="ann">Design</div>
+            <div className="svc-grid">
+              <div>
+                <h3 className="hed-svc">Architectural<br/><strong>Concrete Design</strong></h3>
+                <p className="body">Full-scope concrete design services from structural planning to surface finish — we work directly with your architect or designer from drawing to pour.</p>
+                <span className="btn">Get a Quote</span>
+              </div>
+              <div>
+                <Img label="service photography — architectural concrete design" ratio="4/3"/>
+                <p className="caption">Architectural design — Seattle, WA — Custom formwork, board-formed finish</p>
+              </div>
+            </div>
+          </div>
+          <div className="rule" style={{ marginTop:40 }}/>
+          {/* Service 02 */}
+          <div className="gl svc-pair">
+            <div className="ann">Walls</div>
+            <div className="svc-grid" style={{ direction:'rtl' }}>
+              <div style={{ direction:'ltr' }}>
+                <h3 className="hed-svc">Custom<br/><strong>Walls</strong></h3>
+                <p className="body">Exposed concrete walls built to architectural specification, inside or out. Every form tie, every reveal strip, every surface texture is deliberate.</p>
+                <span className="btn">Get a Quote</span>
+              </div>
+              <div style={{ direction:'ltr' }}>
+                <Img label="service photography — custom walls" ratio="4/3"/>
+                <p className="caption">Custom wall — Bellevue, WA — Smooth trowel finish, natural grey</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    /* ── PAGE 3: SERVICES 3 + 4 ── */
+    function PageServices2() {
+      return (
+        <div className="page">
+          <PageHeader section="Services"/>
+          {/* Service 03 */}
+          <div className="gl svc-pair">
+            <div className="ann">Patios</div>
+            <div className="svc-grid">
+              <div>
+                <h3 className="hed-svc">Elegant<br/><strong>Patios</strong></h3>
+                <p className="body">Exterior concrete surfaces designed for permanence and finished to specification. We work in broom, exposed aggregate, stamped, and smooth finishes.</p>
+                <span className="btn">Get a Quote</span>
+              </div>
+              <div>
+                <Img label="service photography — elegant patios" ratio="4/3"/>
+                <p className="caption">Residential patio — Kirkland, WA — Board-formed concrete, natural grey finish</p>
+              </div>
+            </div>
+          </div>
+          <div className="rule"/>
+          {/* Service 04 */}
+          <div className="gl svc-pair">
+            <div className="ann">Foundations</div>
+            <div className="svc-grid" style={{ direction:'rtl' }}>
+              <div style={{ direction:'ltr' }}>
+                <h3 className="hed-svc"><strong>Foundations</strong></h3>
+                <p className="body">Structural concrete foundations poured and finished to engineering and architectural standards. Built right the first time.</p>
+                <span className="btn">Get a Quote</span>
+              </div>
+              <div style={{ direction:'ltr' }}>
+                <Img label="service photography — foundations" ratio="4/3"/>
+                <p className="caption">Foundation — Redmond, WA — Structural pour, engineer-certified</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    /* ── PAGE 4: PORTFOLIO ── */
+    const PROJECTS = [
+      { caption:'Residential patio — Bellevue, WA — Board-formed concrete, natural grey finish' },
+      { caption:'Commercial lobby — Seattle, WA — Smooth trowel, pigmented concrete' },
+      { caption:'Garden wall — Kirkland, WA — Vertical board-form, natural release' },
+      { caption:'Office courtyard — Bellevue, WA — Exposed aggregate, broom finish perimeter' },
+      { caption:'Foundation — Redmond, WA — Structural pour, 4000 psi mix design' },
+      { caption:'Retail facade — Seattle, WA — GFRC panel system, custom reveal pattern' },
+    ];
+
+    function PagePortfolio() {
+      return (
+        <div className="page">
+          <PageHeader section="Portfolio"/>
+          <div className="gl" style={{ marginBottom:36 }}>
+            <div className="ann">03 — Portfolio</div>
+            <div>
+              <h2 className="hed hed-section">Selected<strong>Projects.</strong></h2>
+            </div>
+          </div>
+          <div className="gl">
+            <div/>
+            <div className="port-grid">
+              {PROJECTS.map((p, i) => (
+                <div key={i}>
+                  <Img label={p.caption.split(' — ')[0]} ratio="3/2"/>
+                  <p className="caption">{p.caption}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    /* ── PAGE 5: ABOUT ── */
+    function PageAbout() {
+      return (
+        <div className="page">
+          <PageHeader section="About"/>
+          <div className="gl">
+            <div className="ann">04 — About</div>
+            <div>
+              <h2 className="hed hed-section">Owner-<strong>Operated.</strong></h2>
+              <div className="body" style={{ maxWidth:620 }}>
+                <p>I'm [Owner Name], and I've been doing this work for over a decade. My family is here in the Pacific Northwest — this business is how I provide for them, and that means every pour matters to me personally.</p>
+                <p>I don't subcontract your job out and disappear. I'm there. From the first site visit to the final finish, you're working with the person who owns this company. That's not a marketing line — it's how we operate.</p>
+                <p>HTS Concrete is a small, owner-operated business. We work with homeowners who've done their research and with architects and developers who need a concrete contractor they don't have to babysit. We understand design intent. We treat the spec as a floor, not a ceiling.</p>
+                <p>We serve the greater Pacific Northwest. If you've seen work you'd like us to replicate or improve upon, bring the photo. We'll talk about how it was done and what we'd do differently.</p>
+              </div>
+              <span className="btn">Get a Quote</span>
+            </div>
+          </div>
+          <div className="gl" style={{ marginTop:48 }}>
+            <div/>
+            <Img label="photography — owner on-site" ratio="16/6"/>
+          </div>
+        </div>
+      );
+    }
+
+    /* ── PAGE 6: CONTACT ── */
+    function PageContact() {
+      return (
+        <div className="page">
+          <PageHeader section="Contact"/>
+          <div className="gl">
+            <div className="ann">05 — Contact</div>
+            <div style={{ maxWidth:600 }}>
+              <h2 className="hed hed-section">Get in<strong>Touch.</strong></h2>
+              <p className="body" style={{ marginBottom:32 }}>Tell us about your project and we'll be in touch.</p>
+
+              {/* Static form */}
+              {['Name','Email','Phone'].map(f => (
+                <div className="form-field" key={f}>
+                  <label className="form-label">{f}</label>
+                  <div className="form-line"/>
+                </div>
+              ))}
+              <div className="form-field">
+                <label className="form-label">Project Type</label>
+                <div className="form-line"/>
+              </div>
+              <div className="form-field">
+                <label className="form-label">Message</label>
+                <div className="form-line-tall"/>
+              </div>
+              <span className="btn">Send Message</span>
+
+              <div className="contact-detail-grid">
+                {[
+                  { label:'Email',        val:'HTSConstructionWA@gmail.com' },
+                  { label:'Phone',        val:'425-269-44XX' },
+                  { label:'Service Area', val:'Pacific Northwest — Washington State' },
+                  { label:'Response',     val:'We reply within one business day' },
+                ].map(d => (
+                  <div key={d.label}>
+                    <p className="mono-label" style={{ marginBottom:6 }}>{d.label}</p>
+                    <p className="body" style={{ fontSize:14 }}>{d.val}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    /* ── PAGE 7: FOOTER ── */
+    function PageFooter() {
+      return (
+        <div className="page footer-page">
+          <div className="gl">
+            <div/>
+            <div>
+              <p className="footer-logo">HTS Concrete</p>
+              <p className="footer-detail">
+                Architectural concrete for residential<br/>
+                and commercial spaces.<br/>
+                Washington State — Pacific Northwest.<br/>
+                <br/>
+                HTSConstructionWA@gmail.com<br/>
+                425-269-44XX
+              </p>
+              <ul className="footer-nav-list">
+                {['Home','Services','Portfolio','About','Contact'].map(l => <li key={l}>{l}</li>)}
+              </ul>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    function App() {
+      return (
+        <>
+          <PageHome/>
+          <PageServices1/>
+          <PageServices2/>
+          <PagePortfolio/>
+          <PageAbout/>
+          <PageContact/>
+          <PageFooter/>
+        </>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+
+    // Auto-print after fonts + React are ready
+    document.fonts.ready.then(() => {
+      setTimeout(() => { window.print(); }, 500);
+    });
+  </script>
+</body>
+</html>
