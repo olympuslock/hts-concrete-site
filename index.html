@@ -667,10 +667,9 @@
 
     /* ── Contact ── */
     function Contact() {
-      const [form, setForm] = useState({ name:'', email:'', phone:'', type:'', message:'' });
-      const [sent, setSent] = useState(false);
-      const set = e => setForm(f => ({ ...f, [e.target.name]: e.target.value }));
-      const submit = e => { e.preventDefault(); setSent(true); };
+      useEffect(() => {
+        if (window.Tally) window.Tally.loadEmbeds();
+      }, []);
       return (
         <section id="contact" data-screen-label="05 Contact">
           <div className="section-rule" style={{ marginBottom:0, paddingBottom:'var(--section-v)' }}>
@@ -684,40 +683,16 @@
                 <h2 className="hed hed-section">Get in<strong>Touch.</strong></h2>
                 <p className="body" style={{ marginBottom:48 }}>Tell us about your project and we'll be in touch.</p>
 
-                {sent ? (
-                  <p className="body" style={{ fontFamily:'var(--f-mono)', fontSize:13, opacity:0.6 }}>
-                    Thank you. We'll be in touch shortly.
-                  </p>
-                ) : (
-                  <form onSubmit={submit} noValidate>
-                    {[
-                      { name:'name',  label:'Name',  type:'text',  required:true },
-                      { name:'email', label:'Email', type:'email', required:true },
-                      { name:'phone', label:'Phone', type:'tel',   required:false },
-                    ].map(f => (
-                      <div className="form-field" key={f.name}>
-                        <label className="form-label" htmlFor={`f-${f.name}`}>{f.label}</label>
-                        <input className="form-control" id={`f-${f.name}`} type={f.type} name={f.name} value={form[f.name]} onChange={set} required={f.required}/>
-                      </div>
-                    ))}
-                    <div className="form-field">
-                      <label className="form-label" htmlFor="f-type">Project Type</label>
-                      <select className="form-control" id="f-type" name="type" value={form.type} onChange={set}>
-                        <option value="">Select one</option>
-                        <option>Architectural Concrete Design</option>
-                        <option>Custom Walls</option>
-                        <option>Elegant Patios</option>
-                        <option>Foundations</option>
-                        <option>Other</option>
-                      </select>
-                    </div>
-                    <div className="form-field">
-                      <label className="form-label" htmlFor="f-msg">Message</label>
-                      <textarea className="form-control" id="f-msg" name="message" value={form.message} onChange={set} rows={5}/>
-                    </div>
-                    <button type="submit" className="btn" style={{ marginTop:8 }}>Send Message</button>
-                  </form>
-                )}
+                <iframe
+                  data-tally-src="https://tally.so/embed/RGvpKl?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
+                  loading="lazy"
+                  width="100%"
+                  height="481"
+                  frameBorder="0"
+                  marginHeight="0"
+                  marginWidth="0"
+                  title="Contact us"
+                />
 
                 <div className="contact-detail-grid">
                   {[
@@ -801,5 +776,6 @@
 
     ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
   </script>
+  <script>var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}</script>
 </body>
 </html>
