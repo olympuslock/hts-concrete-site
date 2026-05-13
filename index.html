@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HTS Concrete — Architectural Concrete, Pacific Northwest</title>
+  <title>HTS Custom Concrete — Architectural Concrete, Pacific Northwest</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,700;1,300&family=DM+Sans:opsz,wght@9..40,400&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
@@ -111,6 +111,17 @@
     }
     .nav-links a:hover::after,
     .nav-links a.is-active::after { width: 100%; }
+
+    .nav-phone {
+      font-family: var(--f-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: var(--ink);
+      text-decoration: none;
+      opacity: 0.6;
+      transition: opacity 200ms ease;
+    }
+    .nav-phone:hover { opacity: 1; }
 
     /* ── LAYOUT ── */
     .gl {
@@ -401,6 +412,7 @@
       .ann { display: none; }
       .svc-grid, .port-grid, .contact-detail-grid { grid-template-columns: 1fr; }
       .nav-links { gap: 20px; }
+      .nav-phone { display: none; }
       .bleed-r { margin-right: 0; }
     }
   </style>
@@ -457,12 +469,13 @@
       return (
         <nav className="site-nav" aria-label="Primary navigation">
           <div className="nav-inner">
-            <a href="#home" className="nav-logo">HTS Concrete</a>
+            <a href="#home" className="nav-logo">HTS Custom Concrete</a>
             <ul className="nav-links">
               {links.map(([id, label]) => (
                 <li key={id}><a href={`#${id}`} className={active === id ? 'is-active' : ''}>{label}</a></li>
               ))}
             </ul>
+            <a href="tel:4252694422" className="nav-phone">425-269-4422</a>
           </div>
         </nav>
       );
@@ -633,9 +646,9 @@
               <FI>
                 <h2 className="hed hed-section">Owner-<strong>Operated.</strong></h2>
                 <div className="body">
-                  <p>We are Sean and Heather, the proud owners of HTS Construction, a family-owned-and-operated concrete construction company in the Pacific Northwest.</p>
+                  <p>We are Sean and Heather, the proud owners of HTS Custom Concrete, a family-owned-and-operated concrete construction company in the Pacific Northwest.</p>
                   <p>With over 20 years of experience in the industry, you're working directly with us — the owners — from the very first conversation to the final broom finish. We personally oversee every pour, and take pride in the quality of our craftsmanship.</p>
-                  <p>We work with homeowners who've done their research and with architects and developers who need a concrete contractor they don't have to babysit. We understand design intent. We treat the spec as a floor, not a ceiling. We're not a general contractor who also does concrete — concrete is the whole job. It's all we do.</p>
+                  <p>We work with homeowners who've done their research and with architects and developers who need a concrete contractor they don't have to babysit. We understand design intent. We treat the spec as a floor, not a ceiling. We're not a general contractor who also does concrete — HTS Custom Concrete is the whole job. It's all we do.</p>
                   <p>We work throughout the greater Puget Sound and the I-90 corridor east to Cle Elum. If you've seen work you'd like us to replicate or improve upon, bring the photo. We'll talk about how it was done and what we'd do differently.</p>
                 </div>
                 <a href="#contact" className="btn">Get a Quote</a>
@@ -709,7 +722,7 @@
 
                 <div className="contact-detail-grid">
                   {[
-                    { label:'Email',        val:'HTSConstructionWA@gmail.com' },
+                    { label:'Email',        val:'sean@htscustomconcrete.com' },
                     { label:'Phone',        val:'425-269-4422' },
                     { label:'Service Area', val:'Greater Puget Sound and the I-90 corridor to Cle Elum — Seattle, Eastside, and King, Snohomish, and Kittitas counties.' },
                     { label:'Licensed',     val:'WA State reg. HTSCOC*794Q3' },
@@ -735,14 +748,14 @@
           <div className="gl" style={{ background:'var(--navy)' }}>
             <div/>
             <div>
-              <p className="footer-logo">HTS Concrete</p>
+              <p className="footer-logo">HTS Custom Concrete</p>
               <p className="footer-detail">
                 Architectural concrete for residential<br/>
                 and commercial spaces.<br/>
                 Greater Puget Sound and the I-90 corridor<br/>
                 to Cle Elum — King, Snohomish &amp; Kittitas counties.<br/>
                 <br/>
-                HTSConstructionWA@gmail.com<br/>
+                sean@htscustomconcrete.com<br/>
                 425-269-4422<br/>
                 <br/>
                 Licensed contractor<br/>
