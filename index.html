@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HTS Concrete — Architectural Concrete, Pacific Northwest</title>
+  <title>HTS Concrete &amp; Construction — Architectural Concrete, Pacific Northwest</title>
   <link rel="icon" href="images/favicons/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" href="images/favicons/favicon-32.png" sizes="32x32">
   <link rel="icon" type="image/png" href="images/favicons/favicon-16.png" sizes="16x16">
@@ -490,12 +490,12 @@
 
     /* ── Nav ── */
     function Nav({ active }) {
-      const links = [['home','Home'],['services','Services'],['portfolio','Portfolio'],['about','About'],['contact','Contact']];
+      const links = [['home','Home'],['services','Concrete Services'],['excavation','Excavation Services'],['portfolio','Portfolio'],['about','About'],['contact','Contact']];
       return (
         <nav className="site-nav" aria-label="Primary navigation">
           <div className="nav-inner">
             <a href="#home" className="nav-logo">
-              <img src="images/logo/hts_logo_red_on_cream.png" alt="HTS Concrete"/>
+              <img src="images/logo/hts_logo_red_on_cream.png" alt="HTS Concrete &amp; Construction"/>
             </a>
             <ul className="nav-links">
               {links.map(([id, label]) => (
@@ -519,7 +519,7 @@
                 <h1 style={{ margin:0 }}>
                   <img
                     src="images/logo/hts_logo_red_on_cream.png"
-                    alt="HTS Concrete"
+                    alt="HTS Concrete &amp; Construction"
                     style={{ width:360, maxWidth:'100%', height:'auto', display:'block' }}
                   />
                 </h1>
@@ -577,10 +577,10 @@
           </div>
 
           <div className="gl" style={{ marginBottom:64 }}>
-            <div className="ann">02 — Services</div>
+            <div className="ann">02 — Concrete Services</div>
             <div className="col col-narrow">
               <FI>
-                <h2 className="hed hed-section">What We<strong>Build.</strong></h2>
+                <h2 className="hed hed-section">Concrete<strong>Services.</strong></h2>
               </FI>
             </div>
           </div>
@@ -621,6 +621,76 @@
       { type:'commercial',  caption:'Retail facade — Seattle, WA — GFRC panel system, custom reveal pattern', ratio:'3/2' },
     ];
 
+    /* ── Excavation Services ── */
+    const EXCAV = [
+      {
+        num:'01', ann:'Site Prep',
+        title:['Site','Preparation'],
+        body:'Full site preparation ahead of any concrete or structural work. Clearing, grubbing, rough grading, and sub-base compaction to spec before a single form goes up.',
+        caption:'Site preparation — North Bend, WA — Clearing and rough grade for residential foundation',
+      },
+      {
+        num:'02', ann:'Excavation',
+        title:['Foundation','Excavation'],
+        body:'Precise excavation for stem walls, footings, and daylight basements. We dig to the engineer\'s drawings and hold the tolerances that matter when concrete follows.',
+        caption:'Foundation excavation — Issaquah, WA — Daylight basement, engineer-specified depth',
+      },
+      {
+        num:'03', ann:'Grading',
+        title:['Grading &','Drainage'],
+        body:'Final grading and drainage shaping around structures. We work to ensure water moves away from your foundation and concrete surfaces — not toward them.',
+        caption:'Grading — Snoqualmie, WA — Drainage slope, finish grade for patio pour',
+      },
+      {
+        num:'04', ann:'Trenching',
+        title:['Trenching',''],
+        body:'Utility and drainage trenching cut to line and grade. We coordinate with your plumber, electrician, or civil engineer so the trench is right before backfill.',
+        caption:'Trenching — Redmond, WA — Utility trench, compacted backfill',
+      },
+    ];
+
+    function Excavation() {
+      return (
+        <section id="excavation" data-screen-label="03 Excavation Services">
+          <div className="section-rule" style={{ marginBottom:0, paddingBottom:'var(--section-v)' }}>
+            <div style={{ height:'0.5px', background:'var(--ink)', opacity:0.25 }}/>
+          </div>
+
+          <div className="gl" style={{ marginBottom:64 }}>
+            <div className="ann">03 — Excavation Services</div>
+            <div className="col col-narrow">
+              <FI>
+                <h2 className="hed hed-section">Excavation<strong>Services.</strong></h2>
+              </FI>
+            </div>
+          </div>
+
+          {EXCAV.map((s, i) => (
+            <div className="gl svc-block" key={s.num}>
+              <div className="ann">{s.ann}</div>
+              <div className="col">
+                <FI>
+                  <div className="svc-grid" style={{ direction: i % 2 === 1 ? 'rtl' : 'ltr' }}>
+                    <div style={{ direction:'ltr' }}>
+                      <h3 className="hed-svc">
+                        {s.title[0]}{s.title[1] && <><br/><strong>{s.title[1]}</strong></>}
+                      </h3>
+                      <p className="body">{s.body}</p>
+                      <a href="#contact" className="btn" style={{ marginTop:32 }}>Get a Quote</a>
+                    </div>
+                    <div style={{ direction:'ltr' }}>
+                      <Img label={`service photography — ${s.title.join(' ').trim().toLowerCase()}`} ratio="4/3" bleed={i % 2 === 0}/>
+                      <p className="caption">{s.caption}</p>
+                    </div>
+                  </div>
+                </FI>
+              </div>
+            </div>
+          ))}
+        </section>
+      );
+    }
+
     function Portfolio() {
       const [filter, setFilter] = useState('all');
       const visible = PROJECTS.filter(p => filter === 'all' || p.type === filter);
@@ -631,7 +701,7 @@
           </div>
 
           <div className="gl" style={{ marginBottom:48 }}>
-            <div className="ann">03 — Portfolio</div>
+            <div className="ann">04 — Portfolio</div>
             <div className="col col-narrow">
               <FI>
                 <h2 className="hed hed-section">Selected<strong>Projects.</strong></h2>
@@ -672,12 +742,12 @@
           </div>
 
           <div className="gl">
-            <div className="ann">04 — About</div>
+            <div className="ann">05 — About</div>
             <div className="col col-narrow">
               <FI>
                 <h2 className="hed hed-section">Owner-<strong>Operated.</strong></h2>
                 <div className="body">
-                  <p>We are Sean and Heather, the proud owners of HTS Concrete, a family-owned-and-operated concrete construction company in the Pacific Northwest.</p>
+                  <p>We are Sean and Heather, the proud owners of HTS Concrete &amp; Construction, a family-owned-and-operated concrete construction company in the Pacific Northwest.</p>
                   <p>With over 20 years of experience in the industry, you're working directly with us — the owners — from the very first conversation to the final broom finish. We personally oversee every pour, and take pride in the quality of our craftsmanship.</p>
                   <p>We work throughout the greater Puget Sound, the I-90 corridor east to Cle Elum, and the I-5 corridor north to Mount Vernon.</p>
                 </div>
@@ -691,7 +761,7 @@
             <FI className="col bleed-r about-img">
               <img
                 src="images/about/about_family.jpg"
-                alt="Sean and Heather Tolbert — HTS Concrete"
+                alt="Sean and Heather Tolbert — HTS Concrete &amp; Construction"
                 loading="lazy"
                 style={{ width:'100%', height:'100%', objectFit:'cover', display:'block' }}
               />
@@ -713,7 +783,7 @@
           </div>
 
           <div className="gl">
-            <div className="ann">05 — Contact</div>
+            <div className="ann">06 — Contact</div>
             <div className="col col-narrow">
               <FI>
                 <h2 className="hed hed-section">Get in<strong>Touch.</strong></h2>
@@ -758,7 +828,7 @@
           <div className="gl" style={{ background:'var(--navy)' }}>
             <div/>
             <div>
-              <p className="footer-logo">HTS Concrete</p>
+              <p className="footer-logo">HTS Concrete &amp; Construction</p>
               <p className="footer-detail">
                 Architectural concrete for residential<br/>
                 and commercial spaces.<br/>
@@ -772,7 +842,7 @@
                 WA State reg. HTSCOC*794Q3
               </p>
               <ul className="footer-nav">
-                {[['home','Home'],['services','Services'],['portfolio','Portfolio'],['about','About'],['contact','Contact']].map(([id,l]) => (
+                {[['home','Home'],['services','Concrete Services'],['excavation','Excavation Services'],['portfolio','Portfolio'],['about','About'],['contact','Contact']].map(([id,l]) => (
                   <li key={id}><a href={`#${id}`}>{l}</a></li>
                 ))}
               </ul>
@@ -801,6 +871,7 @@
           <main>
             <Hero/>
             <Services/>
+            <Excavation/>
             <Portfolio/>
             <About/>
             <Contact/>
