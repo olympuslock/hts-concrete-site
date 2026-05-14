@@ -82,12 +82,15 @@
       justify-content: space-between;
     }
     .nav-logo {
-      font-family: var(--f-mono);
-      font-size: 12px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--red);
+      display: flex;
+      align-items: center;
       text-decoration: none;
+      flex-shrink: 0;
+    }
+    .nav-logo img {
+      height: 40px;
+      width: auto;
+      display: block;
     }
     .nav-links {
       list-style: none;
@@ -470,7 +473,9 @@
       return (
         <nav className="site-nav" aria-label="Primary navigation">
           <div className="nav-inner">
-            <a href="#home" className="nav-logo">HTS Custom Concrete</a>
+            <a href="#home" className="nav-logo">
+              <img src="images/logo/hts_logo_red_on_cream.png" alt="HTS Concrete"/>
+            </a>
             <ul className="nav-links">
               {links.map(([id, label]) => (
                 <li key={id}><a href={`#${id}`} className={active === id ? 'is-active' : ''}>{label}</a></li>
